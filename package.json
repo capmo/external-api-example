@@ -33,12 +33,14 @@
     "@api/capmoapi": "file:.api/apis/capmoapi",
     "dotenv-safe": "^9.1.0",
     "form-data": "^4.0.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "mime-types": "^2.1.35"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.6",
     "@types/dotenv-safe": "^8.1.6",
     "@types/lodash": "^4.17.1",
+    "@types/mime-types": "^2.1.4",
     "@types/node": "^20.12.11",
     "prettier": "^3.2.5",
     "ts-node": "^10.9.2",

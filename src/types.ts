@@ -21,3 +21,9 @@ export interface Project {
   server_updated_at: string | null;
   server_deleted_at: string | null;
 }
+
+export interface FileInfo {
+  name: string;
+  path: string;
+  mimeType: string;
+}

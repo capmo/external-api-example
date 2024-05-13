@@ -1,13 +1,7 @@
 import { config } from "dotenv-safe";
 import capmo from "@api/capmoapi";
 import difference from "lodash/difference";
-import {
-  filesToIgnore,
-  listFiles,
-  listFolders,
-  logMessage,
-  uploadFile,
-} from "./utils";
+import { listFiles, listFolders, logMessage, uploadFile } from "./utils";
 import { Project } from "./types";
 
 config();
@@ -133,16 +127,18 @@ const main = async () => {
   const localProjectDocuments = await listFiles(documentsPath);
   logMessage(
     `Local project documents: ${
-      localProjectDocuments.length ? localProjectDocuments.join(", ") : "None"
+      localProjectDocuments.length
+        ? localProjectDocuments.map((document) => document.name).join(", ")
+        : "None"
     }`
   );
 
-  // Use the first document
+  // Use the first document in the local project documents
   const [newDocument] = localProjectDocuments;
 
   const projectAddDocumentResponse = await capmo.getDocumentUploadUrl(
     {
-      mime_type: "application/pdf",
+      mime_type: newDocument.mimeType,
     },
     {
       projectId: newProject.id,
@@ -156,17 +152,19 @@ const main = async () => {
     );
   }
 
+  // Upload the document to the project's document upload URL
   const documentUploadData = projectAddDocumentResponse.data.data;
 
   await uploadFile({
     fields: documentUploadData.fields,
-    filePath: newDocument,
+    filePath: newDocument.path,
     uploadUrl: documentUploadData.upload_url,
   });
 
+  // Create a project document with the uploaded document
   const documentUploadResponse = await capmo.createProjectDocument(
     {
-      name: "cat.pdf",
+      name: newDocument.name,
       data_path: documentUploadData.data_path,
     },
     {

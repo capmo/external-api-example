@@ -1,23 +1,38 @@
-import { join } from "path";
+import { basename, join } from "path";
 import { createReadStream } from "fs";
 import { readdir, stat } from "fs/promises";
+import mime from "mime-types";
 import FormData from "form-data";
+import { FileInfo } from "./types";
 
+/**
+ * Files to ignore when listing files in a directory. For example, macOS creates
+ * a `.DS_Store` file in directories, which we want to ignore.
+ */
 export const filesToIgnore = [".DS_Store"];
+
+export const defaultMimeType = "application/octet-stream";
 
 export const logMessage = (message?: any): void => {
   console.log(message);
 };
 
-export const listFiles = async (directory: string): Promise<string[]> => {
+export const getMimeType = (filePath: string) =>
+  mime.lookup(basename(filePath));
+
+export const listFiles = async (directory: string): Promise<FileInfo[]> => {
   try {
     const files = await readdir(directory);
-    const fileList: string[] = [];
+    const fileList: FileInfo[] = [];
 
     for (let file of files) {
       const filePath = join(directory, file);
       if ((await stat(filePath)).isFile() && !filesToIgnore.includes(file)) {
-        fileList.push(filePath);
+        fileList.push({
+          name: file,
+          path: filePath,
+          mimeType: getMimeType(filePath) || defaultMimeType,
+        });
       }
     }
 
