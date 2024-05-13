@@ -9,7 +9,6 @@ import {
   uploadFile,
 } from "./utils";
 import { Project } from "./types";
-import { log } from "console";
 
 config();
 
@@ -130,47 +129,51 @@ const main = async () => {
   );
   logMessage(projectInviteResponse.data.message);
 
-  // // Add existing documents to the project
-  // const localProjectDocuments = await listFiles(documentsPath);
-  // logMessage(
-  //   `Local project documents: ${
-  //     localProjectDocuments.length ? localProjectDocuments.join(", ") : "None"
-  //   }`
-  // );
+  // Add existing documents to the project
+  const localProjectDocuments = await listFiles(documentsPath);
+  logMessage(
+    `Local project documents: ${
+      localProjectDocuments.length ? localProjectDocuments.join(", ") : "None"
+    }`
+  );
 
-  // // Use the first document
-  // const [newDocument] = localProjectDocuments;
+  // Use the first document
+  const [newDocument] = localProjectDocuments;
 
-  // const projectAddDocumentResponse = await capmo.getDocumentUploadUrl(
-  //   {
-  //     mime_type: "application/pdf",
-  //   },
-  //   {
-  //     projectId: newProject.id,
-  //   }
-  // );
-  // logMessage(projectAddDocumentResponse.data.message);
+  const projectAddDocumentResponse = await capmo.getDocumentUploadUrl(
+    {
+      mime_type: "application/pdf",
+    },
+    {
+      projectId: newProject.id,
+    }
+  );
+  logMessage(projectAddDocumentResponse.data.message);
 
-  // if (!projectAddDocumentResponse.data.data) {
-  //   throw new Error(
-  //     "An error occurred while adding the document to the project."
-  //   );
-  // }
+  if (!projectAddDocumentResponse.data.data) {
+    throw new Error(
+      "An error occurred while adding the document to the project."
+    );
+  }
 
-  // const documentUploadData = projectAddDocumentResponse.data.data;
+  const documentUploadData = projectAddDocumentResponse.data.data;
 
-  // await uploadFile(newDocument, documentUploadData.upload_url);
+  await uploadFile({
+    fields: documentUploadData.fields,
+    filePath: newDocument,
+    uploadUrl: documentUploadData.upload_url,
+  });
 
-  // const documentUploadResponse = await capmo.createProjectDocument(
-  //   {
-  //     name: "cat.pdf",
-  //     data_path: documentUploadData.data_path,
-  //   },
-  //   {
-  //     projectId: newProject.id,
-  //   }
-  // );
-  // logMessage(documentUploadResponse.data.message);
+  const documentUploadResponse = await capmo.createProjectDocument(
+    {
+      name: "cat.pdf",
+      data_path: documentUploadData.data_path,
+    },
+    {
+      projectId: newProject.id,
+    }
+  );
+  logMessage(documentUploadResponse.data.message);
 };
 
 main();

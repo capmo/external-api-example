@@ -1,6 +1,7 @@
-import axios from "axios";
-import { readdir, readFile, stat } from "fs/promises";
 import { join } from "path";
+import { createReadStream } from "fs";
+import { readdir, stat } from "fs/promises";
+import FormData from "form-data";
 
 export const filesToIgnore = [".DS_Store"];
 
@@ -46,17 +47,28 @@ export const listFolders = async (directory: string): Promise<string[]> => {
   }
 };
 
-export const uploadFile = async (filePath: string, uploadUrl: string) => {
-  try {
-    const fileContent = await readFile(filePath);
-    const response = await axios.put(uploadUrl, fileContent, {
-      headers: {
-        "Content-Type": "application/pdf",
-        "Content-Length": fileContent.length,
-      },
+export const uploadFile = async ({
+  fields,
+  filePath,
+  uploadUrl,
+}: {
+  fields: Record<string, any>;
+  filePath: string;
+  uploadUrl: string;
+}) =>
+  new Promise((resolve, reject) => {
+    const form = new FormData();
+
+    Object.entries(fields).forEach(([field, value]) => {
+      form.append(field, value);
     });
-    return response;
-  } catch (error) {
-    console.error("Error uploading PDF to S3:", error);
-  }
-};
+    form.append("file", createReadStream(filePath));
+
+    form.submit(uploadUrl, (error, response) => {
+      if (error) {
+        reject(error);
+      }
+
+      resolve(response);
+    });
+  });
