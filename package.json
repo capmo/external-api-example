@@ -1,0 +1,48 @@
+{
+  "name": "external-api-example",
+  "version": "1.0.0",
+  "description": "A practical example on how to use Capmo's external API",
+  "main": "src/index.ts",
+  "private": true,
+  "scripts": {
+    "prettier": "prettier . --write",
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/capmo/external-api-example.git"
+  },
+  "keywords": [
+    "nodejs",
+    "api",
+    "automation",
+    "script",
+    "capmo"
+  ],
+  "author": {
+    "name": "João Carmo",
+    "email": "joao.carmo@capmo.de"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/capmo/external-api-example/issues"
+  },
+  "homepage": "https://github.com/capmo/external-api-example#readme",
+  "dependencies": {
+    "@api/capmoapi": "file:.api/apis/capmoapi",
+    "axios": "^1.6.8",
+    "dotenv-safe": "^9.1.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.6",
+    "@types/dotenv-safe": "^8.1.6",
+    "@types/lodash": "^4.17.1",
+    "@types/node": "^20.12.11",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.5"
+  }
+}
