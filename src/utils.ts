@@ -3,7 +3,7 @@ import { createReadStream } from "fs";
 import { readdir, stat } from "fs/promises";
 import mime from "mime-types";
 import FormData from "form-data";
-import { FileInfo } from "./types";
+import type { FileInfo } from "./types";
 
 /**
  * Files to ignore when listing files in a directory. For example, macOS creates

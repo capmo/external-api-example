@@ -2,7 +2,7 @@ import { config } from "dotenv-safe";
 import capmo from "@api/capmoapi";
 import difference from "lodash/difference";
 import { listFiles, listFolders, logMessage, uploadFile } from "./utils";
-import { Project } from "./types";
+import type { Project } from "./types";
 
 config();
 
