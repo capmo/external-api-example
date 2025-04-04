@@ -37,7 +37,7 @@ const main = async () => {
   logMessage(
     `Local projects not yet created in Capmo: ${
       projectsNotCreated.length ? projectsNotCreated.join(", ") : "None"
-    }`
+    }`,
   );
 
   // Create projects based on the local project directories
@@ -69,57 +69,48 @@ const main = async () => {
 
   if (!organisationContactBookPeopleResponse.data.data?.items) {
     throw new Error(
-      "An error occurred while fetching the organisation contact book people."
+      "An error occurred while fetching the organisation contact book people.",
     );
   }
 
   // Find the person to invite in the organisation contact book
   const cbPeopleEmail =
     organisationContactBookPeopleResponse.data.data.items.map(
-      (person) => person.email
+      (person) => person.email,
     );
   if (!cbPeopleEmail.includes(personToInviteEmail)) {
     throw new Error(
-      `The email ${personToInviteEmail} is not in the organisation contact book.`
+      `The email ${personToInviteEmail} is not in the organisation contact book.`,
     );
   }
 
   const orgPersonToInvite =
     organisationContactBookPeopleResponse.data.data.items.find(
-      (person) => person.email === personToInviteEmail
+      (person) => person.email === personToInviteEmail,
     )!;
 
   logMessage(
-    `Organisation Contact Book Person to invite to Project: ${orgPersonToInvite.email}`
+    `Organisation Contact Book Person to invite to Project: ${orgPersonToInvite.email}`,
   );
 
   // Add the organisation contact book person to the project contact book
   const projectAddResponse = await capmo.createProjectPersonFromOrganisation(
-    {
-      person_id: orgPersonToInvite.id,
-    },
-    {
-      projectId: newProject.id,
-    }
+    { person_id: orgPersonToInvite.id },
+    { projectId: newProject.id },
   );
   logMessage(projectAddResponse.data.message);
 
   if (!projectAddResponse.data.data) {
     throw new Error(
-      "An error occurred while adding the organisation contact book person to the project."
+      "An error occurred while adding the organisation contact book person to the project.",
     );
   }
 
   // Invite the project contact book person to the project
   const projectPerson = projectAddResponse.data.data;
   const projectInviteResponse = await capmo.inviteProjectPerson(
-    {
-      person_id: projectPerson.id,
-      role: "ADMIN",
-    },
-    {
-      projectId: newProject.id,
-    }
+    { person_id: projectPerson.id, role: "ADMIN" },
+    { projectId: newProject.id },
   );
   logMessage(projectInviteResponse.data.message);
 
@@ -130,25 +121,21 @@ const main = async () => {
       localProjectDocuments.length
         ? localProjectDocuments.map((document) => document.name).join(", ")
         : "None"
-    }`
+    }`,
   );
 
   // Use the first document in the local project documents
   const [newDocument] = localProjectDocuments;
 
   const projectAddDocumentResponse = await capmo.getDocumentUploadUrl(
-    {
-      mime_type: newDocument.mimeType,
-    },
-    {
-      projectId: newProject.id,
-    }
+    { mime_type: newDocument.mimeType },
+    { projectId: newProject.id },
   );
   logMessage(projectAddDocumentResponse.data.message);
 
   if (!projectAddDocumentResponse.data.data) {
     throw new Error(
-      "An error occurred while adding the document to the project."
+      "An error occurred while adding the document to the project.",
     );
   }
 
@@ -163,13 +150,8 @@ const main = async () => {
 
   // Create a project document with the uploaded document
   const documentUploadResponse = await capmo.createProjectDocument(
-    {
-      name: newDocument.name,
-      data_path: documentUploadData.data_path,
-    },
-    {
-      projectId: newProject.id,
-    }
+    { name: newDocument.name, data_path: documentUploadData.data_path },
+    { projectId: newProject.id },
   );
   logMessage(documentUploadResponse.data.message);
 };

@@ -11,11 +11,11 @@ export interface Project {
   project_key: string;
   start_date: string;
   end_date: string | null;
-  source_id: string | null;
-  created_by: string;
+  source_id?: string | null;
+  created_by: string | null;
   updated_by: string | null;
   created_at: string;
-  updated_at: string | null;
+  updated_at: string;
   deleted_at: string | null;
   server_created_at: string;
   server_updated_at: string | null;
