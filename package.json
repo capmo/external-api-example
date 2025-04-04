@@ -32,19 +32,19 @@
   "dependencies": {
     "@api/capmoapi": "file:.api/apis/capmoapi",
     "dotenv-safe": "^9.1.0",
-    "form-data": "^4.0.0",
+    "form-data": "^4.0.2",
     "lodash": "^4.17.21",
-    "mime-types": "^2.1.35"
+    "mime-types": "^3.0.1"
   },
   "devDependencies": {
-    "@tsconfig/recommended": "^1.0.6",
+    "@tsconfig/recommended": "^1.0.8",
     "@types/dotenv-safe": "^8.1.6",
-    "@types/lodash": "^4.17.1",
+    "@types/lodash": "^4.17.16",
     "@types/mime-types": "^2.1.4",
-    "@types/node": "^20.12.11",
-    "prettier": "^3.2.5",
+    "@types/node": "^22.14.0",
+    "prettier": "^3.5.3",
     "ts-node": "^10.9.2",
-    "tslib": "^2.6.2",
-    "typescript": "^5.4.5"
+    "tslib": "^2.8.1",
+    "typescript": "^5.8.2"
   }
 }
