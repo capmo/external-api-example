@@ -17,11 +17,6 @@ npm i
 npx api install "@capmoapi/v1.0#<version_hash>"
 ```
 
-## Authentication
-
-You'll need an authentication token in order to use our external API. You can
-create one within your account's settings when you use our web app.
-
 ## What it does
 
 This example uses TypeScript to implement the following flow of events in Capmo:
@@ -38,6 +33,37 @@ This example uses TypeScript to implement the following flow of events in Capmo:
 
 These variables should be set in the `.env` file which you can copy from
 `.env.example` and fill in.
+
+## Authentication
+
+1. Log in to your Capmo account at [app.capmo.de](https://app.capmo.de)
+2. Navigate to Account Settings → API Keys
+3. Create a new API Key
+4. Copy the key and add it to your `.env` file
+
+⚠️ Never commit your API key or share it with others.
+
+## Configuration
+
+Configure the following variables in your `.env` file:
+
+- `PROJECTS_PATH`: Directory containing project folders
+- `PERSON_TO_INVITE_EMAIL`: Email of the person to invite
+- `DOCUMENTS_PATH`: Directory containing documents to upload
+
+## Troubleshooting
+
+Common issues and their solutions:
+
+- **Authentication Errors**: Ensure your API token is valid and properly set in `.env`
+- **Version Mismatch**: Make sure you're using the latest API client version
+- **Permission Issues**: Verify your account has the necessary permissions
+
+## Support
+
+- For API-specific questions, visit our [official documentation]
+- For bugs or feature requests, please open an issue
+- For additional support, contact our support team
 
 <!-- References -->
 
