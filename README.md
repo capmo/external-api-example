@@ -4,12 +4,17 @@ A practical example on how to use Capmo's external API.
 
 ## Installation
 
+To get the latest version of the API client, check the [official documentation].
+When you browse an endpoint and select `Node` as the language, you'll see a
+snippet like the following:
+
 ```sh
 # Install dependencies
 npm i
 
-# Generate the client, check the docs for the latest version
-npx api install "@capmoapi/v1.0#dqpb2mplw4ritj5"
+# Install the Capmo API client, check the docs for the latest version
+# and replace <version_hash> with the actual version hash
+npx api install "@capmoapi/v1.0#<version_hash>"
 ```
 
 ## Authentication
@@ -33,3 +38,7 @@ This example uses TypeScript to implement the following flow of events in Capmo:
 
 These variables should be set in the `.env` file which you can copy from
 `.env.example` and fill in.
+
+<!-- References -->
+
+[official documentation]: https://capmoapi.readme.io/
